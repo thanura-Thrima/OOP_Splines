@@ -28,7 +28,7 @@ int main(int argc, char** argv)
             N = std::atoi(argv[1]);
         }
     }
-    catch (std::exception& e)
+    catch (std::exception&)
     {
         std::cout << "wrong arg " << argv[1] << std::endl;
         std::cout << "---HELP---" << std::endl;
@@ -52,7 +52,7 @@ int main(int argc, char** argv)
     points.push_back(DecimalPt(5.0f, 0.0f, 0.0f));
     points.push_back(DecimalPt(6.0f, 2.0f, -1.0f));
     points.push_back(DecimalPt(7.0f, 0.0f, -2.0f));
-    RationalBezierCurve<Decimal, DecimalPt> spline(points,weight);
+    std::shared_ptr<ICurve<Decimal, DecimalPt>> spline = std::make_unique<RationalBezierCurve<Decimal, DecimalPt>>(points, weight);
 
     std::cout << "Rational Bezier curve original pts: \n";
     for (int i = 0; i < points.size(); i++)
@@ -65,7 +65,7 @@ int main(int argc, char** argv)
     std::cout << "\nRational Bezier curve interpolated pts :\n";
     for (int i = 0; i <= N; i++)
     {
-        auto val1 = spline[i/static_cast<Decimal>(N)];
+        auto val1 = spline->operator[](i / static_cast<Decimal>(N));
         std::cout << std::fixed;
         std::cout << std::setprecision(4);
         std::cout<< std::setw(8) <<" U : "<<i/ static_cast<Decimal>(N) << std::setw(12)<<" : pt : (" << val1.x << "," << val1.y << "," << val1.z <<")"<< std::endl;

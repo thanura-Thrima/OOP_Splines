@@ -3,8 +3,10 @@
 #include <mutex>
 #include <vector>
 
+#include "ICurve.h"
+
 template<class T,class V>
-class RationalBezierCurve
+class RationalBezierCurve : public ICurve<T,V>
 {
 public:
 	RationalBezierCurve() = delete;
@@ -18,7 +20,7 @@ public:
 	* T u : value to interpolate in curve [0,1]
 	* return V a 3d coordinate.
 	*/
-	V operator[](T u);
+	V operator[](T u) override;
 private:
 	static void updateFactorial(long N);
 	void updateNCR(long N);
@@ -37,7 +39,7 @@ template<class T, class V>
 std::mutex RationalBezierCurve<T, V>::g_mutex;
 
 template<class T,class V>
-RationalBezierCurve<T,V>::RationalBezierCurve(std::vector<V> pts, std::vector<T> weights):m_pts(pts),m_weights(weights)
+RationalBezierCurve<T,V>::RationalBezierCurve(std::vector<V> pts, std::vector<T> weights):ICurve<T,V>(), m_pts(pts), m_weights(weights)
 {
 }
 
