@@ -3,6 +3,7 @@
 #include <exception>
 
 #include "RationalBezierCurve.h"
+#include "BezierCurve.h"
 
 typedef float Decimal;
 
@@ -52,7 +53,8 @@ int main(int argc, char** argv)
     points.push_back(DecimalPt(5.0f, 0.0f, 0.0f));
     points.push_back(DecimalPt(6.0f, 2.0f, -1.0f));
     points.push_back(DecimalPt(7.0f, 0.0f, -2.0f));
-    std::shared_ptr<ICurve<Decimal, DecimalPt>> spline = std::make_unique<RationalBezierCurve<Decimal, DecimalPt>>(points, weight);
+    //std::shared_ptr<ICurve<Decimal, DecimalPt>> spline = std::make_unique<RationalBezierCurve<Decimal, DecimalPt>>(points, weight);
+    std::shared_ptr<ICurve<Decimal, DecimalPt>> spline = std::make_unique<BezierCurve<Decimal, DecimalPt>>(points);
 
     std::cout << "Rational Bezier curve original pts: \n";
     for (int i = 0; i < points.size(); i++)
