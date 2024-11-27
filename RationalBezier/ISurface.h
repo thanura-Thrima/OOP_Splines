@@ -7,7 +7,7 @@ public:
 	ISurface() {};
 	virtual ~ISurface() = 0;
 
-	virtual V operator[](T u,T v) = 0;
+	virtual V at(T u,T v) = 0;
 };
 
 template<class T, class V>

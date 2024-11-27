@@ -116,7 +116,7 @@ V RationalBezierCurve<T, V>::operator[](T u)
 	if (m_pts.size() != m_weights.size())
 	{
 		std::cout << "Error, wieghts and point counts are different" << std::endl;
-		return static_cast<T>(std::nan("NAN"));
+		return V(static_cast<T>(std::nan("NAN")), static_cast<T>(std::nan("NAN")), static_cast<T>(std::nan("NAN")));
 	}
 	// m_pts.size() give N+1 since N rational bspline has N+1 pts.
 	long N = m_pts.size() -1;

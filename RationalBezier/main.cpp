@@ -4,6 +4,7 @@
 
 #include "RationalBezierCurve.h"
 #include "BezierCurve.h"
+#include "BezierSurface.h"
 
 typedef float Decimal;
 
@@ -46,6 +47,7 @@ int main(int argc, char** argv)
     weight.push_back(.1);
     weight.push_back(.1);
     weight.push_back(.1);
+    weight.push_back(.1);
     points.push_back(DecimalPt(1.0f, 0.0f,0.0f));
     points.push_back(DecimalPt(2.0f, 2.0f, 1.0f));
     points.push_back(DecimalPt(3.0f, 0.0f, 2.0f));
@@ -53,6 +55,7 @@ int main(int argc, char** argv)
     points.push_back(DecimalPt(5.0f, 0.0f, 0.0f));
     points.push_back(DecimalPt(6.0f, 2.0f, -1.0f));
     points.push_back(DecimalPt(7.0f, 0.0f, -2.0f));
+    points.push_back(DecimalPt(9.0f, 0.0f, -3.0f));
     //std::shared_ptr<ICurve<Decimal, DecimalPt>> spline = std::make_unique<RationalBezierCurve<Decimal, DecimalPt>>(points, weight);
     std::shared_ptr<ICurve<Decimal, DecimalPt>> spline = std::make_unique<BezierCurve<Decimal, DecimalPt>>(points);
 
@@ -71,5 +74,19 @@ int main(int argc, char** argv)
         std::cout << std::fixed;
         std::cout << std::setprecision(4);
         std::cout<< std::setw(8) <<" U : "<<i/ static_cast<Decimal>(N) << std::setw(12)<<" : pt : (" << val1.x << "," << val1.y << "," << val1.z <<")"<< std::endl;
+    }
+
+    std::shared_ptr<ISurface<Decimal, DecimalPt>> surface = std::make_unique<BezierSurface<Decimal, DecimalPt>>(points, 2, 4);
+    
+    std::cout << "\nRational Bezier surface interpolated pts :\n";
+    for (int i = 0; i <= N; i++)
+    { 
+        for (int j = 0; j <= N; j++)
+        {
+            auto val1 = surface->at(i / static_cast<Decimal>(N), j / static_cast<Decimal>(N));
+            std::cout << std::fixed;
+            std::cout << std::setprecision(4);
+            std::cout << std::setw(8) << " U : " << i / static_cast<Decimal>(N) << "," << j / static_cast<Decimal>(N) << std::setw(12) << " : pt : (" << val1.x << "," << val1.y << "," << val1.z << ")" << std::endl;
+        }
     }
 }
